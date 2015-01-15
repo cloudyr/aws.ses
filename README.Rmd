@@ -1,0 +1,27 @@
+# AWS SES Client Package #
+
+**aws.ses** is a simple client package for the Amazon Web Services (AWS) [Simple Email Service (SES)](http://aws.amazon.com/ses/) REST API, which can be used to send email messages.
+
+## Installation ##
+
+[![Build Status](https://travis-ci.org/cloudyr/aws.ses.png?branch=master)](https://travis-ci.org/cloudyr/aws.ses)
+
+To install the latest development version from GitHub, run the following:
+
+```R
+if(!require("devtools")){
+    install.packages("devtools")
+    library("devtools")
+}
+install_github("cloudyr/aws.ses")
+```
+
+To install the latest version from CRAN, simply use `install.packages("aws.ses")`.
+```
+
+## Code Examples ##
+
+Coming soon...
+
+---
+[![cloudyr project logo](http://i.imgur.com/JHS98Y7.png)](https://github.com/cloudyr)
