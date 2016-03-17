@@ -2,23 +2,6 @@
 
 **aws.ses** is a simple client package for the Amazon Web Services (AWS) [Simple Email Service (SES)](http://aws.amazon.com/ses/) API, which can be used to send email messages.
 
-## Installation ##
-
-[![CRAN](http://www.r-pkg.org/badges/version/aws.ses)](http://cran.r-project.org/package=aws.ses)
-[![Build Status](https://travis-ci.org/cloudyr/aws.ses.png?branch=master)](https://travis-ci.org/cloudyr/aws.ses) [![codecov.io](http://codecov.io/github/cloudyr/aws.ses/coverage.svg?branch=master)](http://codecov.io/github/cloudyr/aws.ses?branch=master)
-
-To install the latest development version from GitHub, run the following:
-
-```R
-if(!require("devtools")){
-    install.packages("devtools")
-    library("devtools")
-}
-install_github("cloudyr/aws.ses")
-```
-
-To install the latest version from CRAN, simply use `install.packages("aws.ses")`.
-
 To use the package, you will need an AWS account and enter your credentials into R. Your keypair can be generated on the [IAM Management Console](https://console.aws.amazon.com/iam/home?#security_credential) under the heading *Access Keys*. Note that you only have access to your secret key once. After it is generated, you need to save it in a secure location. New keypairs can be generated at any time if yours has been lost, stolen, or forgotten. 
 
 By default, all **cloudyr** packages look for the access key ID and secret access key in environment variables. You can also use this to specify a default region. For example:
@@ -35,6 +18,29 @@ These can alternatively be set on the command line or via an `Renviron.site` or 
 ## Code Examples ##
 
 Coming soon...
+
+## Installation ##
+
+[![CRAN](http://www.r-pkg.org/badges/version/aws.ses)](http://cran.r-project.org/package=aws.ses)
+[![Build Status](https://travis-ci.org/cloudyr/aws.ses.png?branch=master)](https://travis-ci.org/cloudyr/aws.ses)
+[![codecov.io](http://codecov.io/github/cloudyr/aws.ses/coverage.svg?branch=master)](http://codecov.io/github/cloudyr/aws.ses?branch=master)
+
+This package is not yet on CRAN. To install the latest development version you can install from the cloudyr drat repository:
+
+```R
+# latest stable version
+install.packages("aws.ses", repos = c(getOption("repos"), "http://cloudyr.github.io/drat"))
+```
+
+Or, to pull a potentially unstable version directly from GitHub:
+
+```R
+if(!require("ghit")){
+    install.packages("ghit")
+}
+ghit::install_github("cloudyr/aws.ses")
+```
+
 
 ---
 [![cloudyr project logo](http://i.imgur.com/JHS98Y7.png)](https://github.com/cloudyr)
