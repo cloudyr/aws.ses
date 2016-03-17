@@ -1,3 +1,4 @@
+#' @export
 get_dkim <- function(identity, ...) {
     query <- list(Action = "GetIdentityDkimAttributes")
     identity <- as.list(identity)
@@ -7,6 +8,7 @@ get_dkim <- function(identity, ...) {
     return(r)
 }
 
+#' @export
 set_dkim <- function(identity, enabled, ...) {
     query <- list(Action = "SetDkimEnabled", 
                   Identity = identity,
@@ -15,6 +17,7 @@ set_dkim <- function(identity, enabled, ...) {
     return(r)
 }
 
+#' @export
 verify_dkim <- function(domain, ...) {
     query <- list(Action = "VerifyDomainDkim", Domain = domain)
     r <- sesPOST(query = query, ...)

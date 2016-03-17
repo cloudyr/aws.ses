@@ -1,3 +1,4 @@
+#' @export
 set_feedback <- function(identity, forwarding, ...) {
     query <- list(Action = "SetIdentityFeedbackForwardingEnabled", 
                   Identity = identity,

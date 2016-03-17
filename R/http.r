@@ -1,3 +1,8 @@
+#' @import httr
+#' @importFrom aws.signature signature_v4_auth
+#' @importFrom XML xmlToList xmlParse
+#' @importFrom jsonlite fromJSON
+#' @export
 sesPOST <- function(query = list(), 
                     region = Sys.getenv("AWS_DEFAULT_REGION","us-east-1"), 
                     key = Sys.getenv("AWS_ACCESS_KEY_ID"), 

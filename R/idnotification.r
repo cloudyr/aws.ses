@@ -1,3 +1,4 @@
+#' @export
 get_id_notification <- function(identity, ...) {
     query <- list(Action = "GetIdentityNotificationAttributes")
     identity <- as.list(identity)
@@ -6,6 +7,7 @@ get_id_notification <- function(identity, ...) {
     return(r)
 }
 
+#' @export
 set_id_notification <- function(identity, type, topic, ...) {
     query <- list(Action = "SetIdentityNotificationAttributes")
     query$Identity <- identity

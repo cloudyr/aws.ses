@@ -1,13 +1,20 @@
 Package: aws.ses
 Type: Package
 Title: AWS SES Client Package
-Version: 0.1.1
-Date: 2016-01-16
+Version: 0.1.2
+Date: 2016-03-17
 Author: Thomas J. Leeper
 Maintainer: Thomas J. Leeper <thosjleeper@gmail.com>
-Description: A simple client package for the Amazon Web Services (AWS) Simple Email Service (SES) REST API.
+Description: A simple client package for the Amazon Web Services (AWS) Simple
+    Email Service (SES) REST API.
 License: GPL (>= 2)
-Imports: httr, XML, aws.signature
-Suggests: testthat
+Imports:
+    httr,
+    XML,
+    jsonlite,
+    aws.signature
+Suggests:
+    testthat
 URL: https://github.com/cloudyr/aws.ses
 BugReports: https://github.com/cloudyr/aws.ses/issues
+RoxygenNote: 5.0.1.9000

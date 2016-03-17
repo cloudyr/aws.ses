@@ -1,3 +1,4 @@
+#' @export
 list_ids <- function(type, nmax = NULL, next_token = NULL, ...) {
     query <- list(Action = "ListIdentities")
     if (type %in% c("EmailAddress","Domain")) {
@@ -15,6 +16,7 @@ list_ids <- function(type, nmax = NULL, next_token = NULL, ...) {
     return(r)
 }
 
+#' @export
 verify_id <- function(address, domain, ...) {
     query <- list(Action = "VerifyEmailIdentity")
     if (missing(address) & missing(domain)) {
@@ -29,6 +31,7 @@ verify_id <- function(address, domain, ...) {
     return(r)
 }
 
+#' @export
 get_verification_attrs <- function(identity, ...) {
     query <- list(Action = "GetIdentityVerificationAttributes")
     identity <- as.list(identity)

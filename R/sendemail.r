@@ -1,3 +1,4 @@
+#' @export
 send_email <- 
 function(message,
          subject,
@@ -13,6 +14,7 @@ function(message,
     return(r)
 }
 
+#' @export
 send_raw_email <- 
 function(body,
          from,
