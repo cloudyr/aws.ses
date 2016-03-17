@@ -10,10 +10,11 @@ set_id_notification <- function(identity, type, topic, ...) {
     query <- list(Action = "SetIdentityNotificationAttributes")
     query$Identity <- identity
     vtype <- c("Bounce", "Complaint", "Delivery")
-    if(!type %in% vtype)
+    if (!type %in% vtype) {
         stop("'type' must be one of: ", paste0(vtype, collapse = ", "))
+    }
     query$NotificationType <- type
-    if(!missing(topic)) {
+    if (!missing(topic)) {
         query$SnsTopic <- topic
     }
     r <- sesPOST(query = query, ...)

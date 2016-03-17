@@ -1,25 +1,30 @@
 list_ids <- function(type, nmax = NULL, next_token = NULL, ...) {
     query <- list(Action = "ListIdentities")
-    if(type %in% c("EmailAddress","Domain"))
+    if (type %in% c("EmailAddress","Domain")) {
         stop("'type' must be 'EmailAddress' or 'Domain'")
+    }
     query$IdentityType <- type
-    if(!is.null(nmax) && (nmax > 100 | nmax < 1))
+    if (!is.null(nmax) && (nmax > 100 | nmax < 1)) {
         stop("'nmax' must be > 1 and < 100")
+    }
     query$MaxItems <- nmax
-    if(!is.null(next_token))
+    if (!is.null(next_token)) {
         query$NextToken <- next_token
+    }
     r <- sesPOST(query = query, ...)
     return(r)
 }
 
 verify_id <- function(address, domain, ...) {
     query <- list(Action = "VerifyEmailIdentity")
-    if(missing(address) & missing(domain))
+    if (missing(address) & missing(domain)) {
         stop("Must specify 'address' or 'domain'")
-    if(!missing(address))
+    }
+    if (!missing(address)) {
         query$EmailAddress <- address
-    else if(!missing(domain))
+    } else if (!missing(domain)) {
         query$Domain <- domain
+    }
     r <- sesPOST(query = query, ...)
     return(r)
 }
