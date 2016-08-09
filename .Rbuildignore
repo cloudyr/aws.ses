@@ -3,3 +3,5 @@ README.Rmd
 readme.sh
 CONTRIBUTING.md
 drat.sh
+^.*\.Rproj$
+^\.Rproj\.user$
