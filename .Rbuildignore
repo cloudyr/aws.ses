@@ -5,3 +5,4 @@ CONTRIBUTING.md
 drat.sh
 ^.*\.Rproj$
 ^\.Rproj\.user$
+man-roxygen/

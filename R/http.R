@@ -1,6 +1,13 @@
+#' @title SES HTTP Requests
+#' @description Low-level SES POST function
+#' @param query A list containing query string parameters
+#' @param region A character string specifying an AWS region.
+#' @param key A character string specifying an AWS Access Key ID.
+#' @param secret A character string specifying an AWS Secret Access Key.
+#' @param \dots Additional arguments passed to \code{\link[httr]{POST}}.
 #' @import httr
 #' @importFrom aws.signature signature_v4_auth
-#' @importFrom XML xmlToList xmlParse
+#' @importFrom xml2 read_xml as_list
 #' @importFrom jsonlite fromJSON
 #' @export
 sesPOST <- function(query = list(), 
@@ -37,7 +44,7 @@ sesPOST <- function(query = list(),
         r <- POST(url, H, ...)
     }
     if (http_status(r)$category == "client error") {
-        x <- try(xmlToList(xmlParse(content(r, "text"))), silent = TRUE)
+        x <- try(xml2::as_list(xml2::read_xml(content(r, "text"))), silent = TRUE)
         if (inherits(x, "try-error")) {
             x <- try(fromJSON(content(r, "text"))$Error, silent = TRUE)
         }

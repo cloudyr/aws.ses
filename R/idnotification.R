@@ -1,3 +1,15 @@
+#' @rdname idnotification
+#' @title Get/Set Notifications
+#' @description Get/Set ID Notifications
+#' @template identity
+#' @template dots
+#' @examples 
+#' \dontrun{
+#' # get
+#' get_id_notifiaction()
+#' # set
+#' set_id_notifiaction()
+#' }
 #' @export
 get_id_notification <- function(identity, ...) {
     query <- list(Action = "GetIdentityNotificationAttributes")
@@ -7,15 +19,15 @@ get_id_notification <- function(identity, ...) {
     return(r)
 }
 
+#' @rdname idnotification
+#' @param type A character string specifying a notification type.
+#' @param topic An SNS topic name
 #' @export
-set_id_notification <- function(identity, type, topic, ...) {
+set_id_notification <- 
+function(identity, type = c("Bounce", "Complaint", "Delivery"), topic, ...) {
     query <- list(Action = "SetIdentityNotificationAttributes")
     query$Identity <- identity
-    vtype <- c("Bounce", "Complaint", "Delivery")
-    if (!type %in% vtype) {
-        stop("'type' must be one of: ", paste0(vtype, collapse = ", "))
-    }
-    query$NotificationType <- type
+    query$NotificationType <- match.arg(type) 
     if (!missing(topic)) {
         query$SnsTopic <- topic
     }

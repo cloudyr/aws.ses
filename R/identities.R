@@ -1,10 +1,22 @@
+#' @rdname identities
+#' @title SES Identities
+#' @description Manage SES Identities
+#' @param type A character string specifying the identity type.
+#' @param nmax An integer specifying the maximum number of identities to return.
+#' @param next_token A pagination token
+#' @template dots
+#' @examples 
+#' \dontrun{
+#' list_ids(nmax = 5)
+#' }
 #' @export
-list_ids <- function(type, nmax = NULL, next_token = NULL, ...) {
+list_ids <- 
+function(type = c("EmailAddress","Domain"), 
+         nmax = NULL, 
+         next_token = NULL, 
+         ...) {
     query <- list(Action = "ListIdentities")
-    if (type %in% c("EmailAddress","Domain")) {
-        stop("'type' must be 'EmailAddress' or 'Domain'")
-    }
-    query$IdentityType <- type
+    query$IdentityType <- match.arg(type)
     if (!is.null(nmax) && (nmax > 100 | nmax < 1)) {
         stop("'nmax' must be > 1 and < 100")
     }
@@ -16,6 +28,9 @@ list_ids <- function(type, nmax = NULL, next_token = NULL, ...) {
     return(r)
 }
 
+#' @rdname identities
+#' @param address A charcter string specifying an email address.
+#' @param domain A character string specifying a domain.
 #' @export
 verify_id <- function(address, domain, ...) {
     query <- list(Action = "VerifyEmailIdentity")
@@ -31,6 +46,8 @@ verify_id <- function(address, domain, ...) {
     return(r)
 }
 
+#' @rdname identities
+#' @template identity
 #' @export
 get_verification_attrs <- function(identity, ...) {
     query <- list(Action = "GetIdentityVerificationAttributes")
@@ -40,6 +57,8 @@ get_verification_attrs <- function(identity, ...) {
     return(r)
 }
 
+#' @rdname identities
+#' @export
 delete_id <- function(identity, ...) {
     query <- list(Action = "DeleteIdentity", Identity = identity)
     r <- sesPOST(query = query, ...)
