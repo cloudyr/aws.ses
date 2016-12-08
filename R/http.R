@@ -15,7 +15,7 @@ sesPOST <- function(query = list(),
                     key = Sys.getenv("AWS_ACCESS_KEY_ID"), 
                     secret = Sys.getenv("AWS_SECRET_ACCESS_KEY"), 
                     ...) {
-    if (is.null(url)) {
+    if (is.null(url) | is.function(url)) {
         url <- paste0("https://email.",region,".amazonaws.com")
     }
     d_timestamp <- format(Sys.time(), "%Y%m%dT%H%M%SZ", tz = "UTC")
