@@ -10,5 +10,6 @@ set_feedback <- function(identity, forwarding = TRUE, ...) {
                   Identity = identity,
                   ForwardingEnabled = tolower(as.character(forwarding)))
     r <- sesPOST(query = query, ...)
-    return(r)
+    structure(r[["SetIdentityFeedbackForwardingEnabledResponse"]][["SetIdentityFeedbackForwardingEnabledResult"]],
+              RequestId = r[["SetIdentityFeedbackForwardingEnabledResponse"]][["ResponseMetadata"]][["RequestId"]])
 }

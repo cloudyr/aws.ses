@@ -1,28 +1,22 @@
-#' @title Get Quota
-#' @description Get Quota
-#' @template dots
+#' @rdname sendemail
 #' @examples 
 #' \dontrun{
 #' get_quota()
+#' get_statistics()
 #' } 
 #' @export
 get_quota <- function(...) {
     query <- list(Action = "GetSendQuota")
     r <- sesPOST(query = query, ...)
-    return(r)
+    structure(r[["GetSendQuotaResponse"]][["GetSendQuotaResult"]],
+              RequestId = r[["GetSendQuotaResponse"]][["ResponseMetadata"]][["RequestId"]])
 }
 
-#' @title Get Statistics
-#' @description Get Statistics
-#' @template dots
-#' @examples 
-#' \dontrun{
-#' get_statistics()
-#' } 
+#' @rdname sendemail
 #' @export
 get_statistics <- function(...) {
     query <- list(Action = "GetSendStatistics")
     r <- sesPOST(query = query, ...)
-    return(r)
+    structure(r[["GetSendStatisticsResponse"]][["GetSendStatisticsResult"]][["SendDataPoints"]],
+              RequestId = r[["GetSendStatisticsResponse"]][["ResponseMetadata"]][["RequestId"]])
 }
-

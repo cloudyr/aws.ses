@@ -5,10 +5,20 @@
 #' @param nmax An integer specifying the maximum number of identities to return.
 #' @param next_token A pagination token
 #' @template dots
+#' @details \code{verify_id} sends an email verification request to the specified email address.
+#' @return \code{list_ids} returns a character vector of verified email addresses or domains.
 #' @examples 
 #' \dontrun{
-#' list_ids(nmax = 5)
+#' # verify an addres
+#' verify_id("example@example.com")
+#' get_verification_attrs("example@example.com")
+#' 
+#' list_ids()
+#'
+#' # remove identity
+#' delete_id("example@example.com")
 #' }
+#' @seealso \code{\link{get_id_notification}}
 #' @export
 list_ids <- 
 function(type = c("EmailAddress","Domain"), 
@@ -25,7 +35,9 @@ function(type = c("EmailAddress","Domain"),
         query$NextToken <- next_token
     }
     r <- sesPOST(query = query, ...)
-    return(r)
+    structure(r[["ListIdentitiesResponse"]][["ListIdentitiesResult"]][["Identities"]],
+              NextToken = r[["ListIdentitiesResponse"]][["ListIdentitiesResult"]][["NextToken"]],
+              RequestId = r[["ListIdentitiesResponse"]][["ResponseMetadata"]][["RequestId"]])
 }
 
 #' @rdname identities
@@ -34,16 +46,17 @@ function(type = c("EmailAddress","Domain"),
 #' @export
 verify_id <- function(address, domain, ...) {
     query <- list(Action = "VerifyEmailIdentity")
-    if (missing(address) & missing(domain)) {
+    if ((missing(address) & missing(domain)) | (!missing(address) & !missing(domain))) {
         stop("Must specify 'address' or 'domain'")
     }
     if (!missing(address)) {
-        query$EmailAddress <- address
+        query[["EmailAddress"]] <- address
     } else if (!missing(domain)) {
-        query$Domain <- domain
+        query[["Domain"]] <- domain
     }
     r <- sesPOST(query = query, ...)
-    return(r)
+    structure(r[["VerifyEmailIdentityResponse"]][["VerifyEmailIdentityResult"]],
+              RequestId = r[["VerifyEmailIdentityResponse"]][["ResponseMetadata"]][["RequestId"]])
 }
 
 #' @rdname identities
@@ -52,9 +65,12 @@ verify_id <- function(address, domain, ...) {
 get_verification_attrs <- function(identity, ...) {
     query <- list(Action = "GetIdentityVerificationAttributes")
     identity <- as.list(identity)
-    names(identity) <- paste0("Identities.member.", 1:length(identity))
+    names(identity) <- paste0("Identities.member.", seq_along(identity))
+    query <- c(query, identity)
     r <- sesPOST(query = query, ...)
-    return(r)
+    r <- r[["GetIdentityVerificationAttributesResponse"]]
+    structure(r[["GetIdentityVerificationAttributesResult"]][["VerificationAttributes"]],
+              RequestId = r[["ResponseMetadata"]][["RequestId"]])
 }
 
 #' @rdname identities
@@ -62,5 +78,6 @@ get_verification_attrs <- function(identity, ...) {
 delete_id <- function(identity, ...) {
     query <- list(Action = "DeleteIdentity", Identity = identity)
     r <- sesPOST(query = query, ...)
-    return(r)
+    structure(r[["DeleteIdentityResponse"]][["DeleteIdentityResult"]],
+              RequestId = r[["DeleteIdentityResponse"]][["ResponseMetadata"]][["RequestId"]])
 }

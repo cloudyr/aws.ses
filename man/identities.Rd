@@ -31,12 +31,28 @@ delete_id(identity, ...)
 
 \item{\dots}{Additional arguments passed to \code{\link{sesPOST}}.}
 }
+\value{
+\code{list_ids} returns a character vector of verified email addresses or domains.
+}
 \description{
 Manage SES Identities
 }
+\details{
+\code{verify_id} sends an email verification request to the specified email address.
+}
 \examples{
 \dontrun{
-list_ids(nmax = 5)
+# verify an addres
+verify_id("example@example.com")
+get_verification_attrs("example@example.com")
+
+list_ids()
+
+# remove identity
+delete_id("example@example.com")
 }
+}
+\seealso{
+\code{\link{get_id_notification}}
 }
 

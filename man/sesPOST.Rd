@@ -4,18 +4,24 @@
 \alias{sesPOST}
 \title{SES HTTP Requests}
 \usage{
-sesPOST(query = list(), region = Sys.getenv("AWS_DEFAULT_REGION",
-  "us-east-1"), key = Sys.getenv("AWS_ACCESS_KEY_ID"),
-  secret = Sys.getenv("AWS_SECRET_ACCESS_KEY"), ...)
+sesPOST(query = list(), body = NULL,
+  region = Sys.getenv("AWS_DEFAULT_REGION", "us-east-1"),
+  key = Sys.getenv("AWS_ACCESS_KEY_ID"),
+  secret = Sys.getenv("AWS_SECRET_ACCESS_KEY"),
+  session_token = Sys.getenv("AWS_SESSION_TOKEN"), ...)
 }
 \arguments{
 \item{query}{A list containing query string parameters}
 
-\item{region}{A character string specifying an AWS region.}
+\item{body}{A list of query-like parameters to be passed as a form-encoded message body.}
 
-\item{key}{A character string specifying an AWS Access Key ID.}
+\item{region}{A character string containing an AWS region. If missing, the default \dQuote{us-east-1} is used.}
 
-\item{secret}{A character string specifying an AWS Secret Access Key.}
+\item{key}{A character string containing an AWS Access Key ID. The default is pulled from environment variable \dQuote{AWS_ACCESS_KEY_ID}.}
+
+\item{secret}{A character string containing an AWS Secret Access Key. The default is pulled from environment variable \dQuote{AWS_SECRET_ACCESS_KEY}.}
+
+\item{session_token}{Optionally, a character string containing an AWS temporary Session Token. If missing, defaults to value stored in environment variable \dQuote{AWS_SESSION_TOKEN}.}
 
 \item{\dots}{Additional arguments passed to \code{\link[httr]{POST}}.}
 }

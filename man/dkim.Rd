@@ -8,7 +8,7 @@
 \usage{
 get_dkim(identity, ...)
 
-set_dkim(identity, enabled, ...)
+set_dkim(identity, enabled = TRUE, ...)
 
 verify_dkim(domain, ...)
 }
@@ -26,8 +26,10 @@ Manage DKIM
 }
 \examples{
 \dontrun{
-set_dkim(id, TRUE)
-get_dkim(id)
+verify_dkim("example.com")
+get_dkim("me@example.com")
+set_dkim("me@example.com", TRUE)
+get_dkim("me@example.com")
 }
 }
 

@@ -15,7 +15,7 @@ set_id_notification(identity, type = c("Bounce", "Complaint", "Delivery"),
 
 \item{type}{A character string specifying a notification type.}
 
-\item{topic}{An SNS topic name}
+\item{topic}{An SNS topic name. See \code{\link[aws.sns]{create_topic}}}
 
 \item{\dots}{Additional arguments passed to \code{\link{sesPOST}}.}
 }
@@ -25,9 +25,20 @@ Get/Set ID Notifications
 \examples{
 \dontrun{
 # get
-get_id_notifiaction()
+get_id_notifiaction("example@example.com")
+
 # set
-set_id_notifiaction()
+if (require("aws.sns")) {
+  top <- create_topic("ses_email_bounce")
+  set_id_notifiaction("example@example.com", "Bounce", top)
+  get_id_notifiaction("example@example.com")
+  
+  # cleanup
+  delete_topic(top)
 }
+}
+}
+\seealso{
+\code{\link{verify_id}}, \code{\link[aws.sns]{create_topic}}
 }
 

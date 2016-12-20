@@ -5,8 +5,10 @@
 #' @template dots
 #' @examples 
 #' \dontrun{
-#' set_dkim(id, TRUE)
-#' get_dkim(id)
+#' verify_dkim("example.com")
+#' get_dkim("me@example.com")
+#' set_dkim("me@example.com", TRUE)
+#' get_dkim("me@example.com")
 #' }
 #' @export
 get_dkim <- function(identity, ...) {
@@ -15,14 +17,16 @@ get_dkim <- function(identity, ...) {
     names(identity) <- paste0("Identities.member.", 1:length(identity))
     query <- c(query, identity)
     r <- sesPOST(query = query, ...)
-    return(r)
+    structure(r[["GetIdentityDkimAttributesResponse"]][["GetIdentityDkimAttributesResult"]][["DkimAttributes"]],
+          RequestId = r[["GetIdentityDkimAttributesResponse"]][["ResponseMetadata"]][["RequestId"]])
+
 }
 
 #' @rdname dkim
 #' @param enabled A logical.
 #' @export
-set_dkim <- function(identity, enabled, ...) {
-    query <- list(Action = "SetDkimEnabled", 
+set_dkim <- function(identity, enabled = TRUE, ...) {
+    query <- list(Action = "SetIdentityDkimEnabled", 
                   Identity = identity,
                   DkimEnabled = tolower(as.character(enabled)))
     r <- sesPOST(query = query, ...)
