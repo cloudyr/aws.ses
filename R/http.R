@@ -3,9 +3,9 @@
 #' @param query A list containing query string parameters
 #' @param body A list of query-like parameters to be passed as a form-encoded message body.
 #' @param region A character string containing an AWS region. If missing, the default \dQuote{us-east-1} is used.
-#' @param key A character string containing an AWS Access Key ID. The default is pulled from environment variable \dQuote{AWS_ACCESS_KEY_ID}.
-#' @param secret A character string containing an AWS Secret Access Key. The default is pulled from environment variable \dQuote{AWS_SECRET_ACCESS_KEY}.
-#' @param session_token Optionally, a character string containing an AWS temporary Session Token. If missing, defaults to value stored in environment variable \dQuote{AWS_SESSION_TOKEN}.
+#' @param key A character string containing an AWS Access Key ID. See \code{\link[aws.signature]{locate_credentials}}.
+#' @param secret A character string containing an AWS Secret Access Key. See \code{\link[aws.signature]{locate_credentials}}.
+#' @param session_token Optionally, a character string containing an AWS temporary Session Token. See \code{\link[aws.signature]{locate_credentials}}.
 #' @param \dots Additional arguments passed to \code{\link[httr]{POST}}.
 #' @import httr
 #' @importFrom aws.signature signature_v4_auth
@@ -15,9 +15,9 @@
 sesPOST <- function(query = list(), 
                     body = NULL,
                     region = Sys.getenv("AWS_DEFAULT_REGION","us-east-1"), 
-                    key = Sys.getenv("AWS_ACCESS_KEY_ID"), 
-                    secret = Sys.getenv("AWS_SECRET_ACCESS_KEY"), 
-                    session_token = Sys.getenv("AWS_SESSION_TOKEN"),
+                    key = NULL, 
+                    secret = NULL, 
+                    session_token = NULL,
                     ...) {
     uri <- paste0("https://email.",region,".amazonaws.com")
     d_timestamp <- format(Sys.time(), "%Y%m%dT%H%M%SZ", tz = "UTC")
@@ -62,7 +62,7 @@ sesPOST <- function(query = list(),
         }
     }
     
-    if (http_status(r)$category == "Client error") {
+    if (http_error(r)) {
         x <- try(fromJSON(content(r, "text", encoding = "UTF-8"))$Error, silent = TRUE)
         warn_for_status(r)
         h <- headers(r)

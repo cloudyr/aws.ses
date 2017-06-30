@@ -16,4 +16,3 @@ set_feedback(identity, forwarding = TRUE, ...)
 \description{
 Enable feedback forwarding
 }
-

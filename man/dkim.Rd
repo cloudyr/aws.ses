@@ -15,11 +15,11 @@ verify_dkim(domain, ...)
 \arguments{
 \item{identity}{An SES identity.}
 
+\item{\dots}{Additional arguments passed to \code{\link{sesPOST}}.}
+
 \item{enabled}{A logical.}
 
 \item{domain}{A character string containing a domain.}
-
-\item{\dots}{Additional arguments passed to \code{\link{sesPOST}}.}
 }
 \description{
 Manage DKIM
@@ -32,4 +32,3 @@ set_dkim("me@example.com", TRUE)
 get_dkim("me@example.com")
 }
 }
-

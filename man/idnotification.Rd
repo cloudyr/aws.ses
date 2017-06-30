@@ -13,11 +13,11 @@ set_id_notification(identity, type = c("Bounce", "Complaint", "Delivery"),
 \arguments{
 \item{identity}{An SES identity.}
 
+\item{\dots}{Additional arguments passed to \code{\link{sesPOST}}.}
+
 \item{type}{A character string specifying a notification type.}
 
 \item{topic}{An SNS topic name. See \code{\link[aws.sns]{create_topic}}}
-
-\item{\dots}{Additional arguments passed to \code{\link{sesPOST}}.}
 }
 \description{
 Get/Set ID Notifications
@@ -41,4 +41,3 @@ if (require("aws.sns")) {
 \seealso{
 \code{\link{verify_id}}, \code{\link[aws.sns]{create_topic}}
 }
-

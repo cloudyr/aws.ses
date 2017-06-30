@@ -2,8 +2,8 @@
 % Please edit documentation in R/aws.ses-package.R
 \docType{package}
 \name{aws.ses-package}
-\alias{aws.ses}
 \alias{aws.ses-package}
+\alias{aws.ses}
 \title{aws.ses}
 \description{
 AWS SES Client Package
@@ -16,4 +16,3 @@ Service (SES) REST API.
 Thomas J. Leeper <thosjleeper@gmail.com>
 }
 \keyword{package}
-
