@@ -4,7 +4,8 @@ Title: AWS SES Client Package
 Version: 0.1.5
 Date: 2017-06-30
 Authors@R: c(person("Thomas J.", "Leeper", role = c("aut", "cre"),
-                    email = "thosjleeper@gmail.com"))
+                    email = "thosjleeper@gmail.com",
+                    comment = c(ORCID = "0000-0003-4097-6326")))
 Description: A simple client package for the Amazon Web Services (AWS) Simple
     Email Service (SES) <http://aws.amazon.com/ses/> REST API.
 License: GPL (>= 2)
