@@ -6,9 +6,11 @@
 \alias{get_statistics}
 \title{Send Email via SES}
 \usage{
-send_email(message, html, raw = NULL, subject, from, to = NULL, cc = NULL,
-  bcc = NULL, replyto = NULL, returnpath = NULL, charset.subject = NULL,
-  charset.message = NULL, charset.html = NULL, ...)
+send_email(message, html, raw = NULL, subject, from, to = NULL,
+  cc = NULL, bcc = NULL, replyto = NULL, returnpath = NULL,
+  charset.subject = NULL, charset.message = NULL,
+  charset.html = NULL, key = NULL, secret = NULL, region = NULL,
+  force_credentials = FALSE, ...)
 
 get_quota(...)
 
@@ -41,6 +43,14 @@ get_statistics(...)
 
 \item{charset.html}{An optional character string specifying the character set, e.g., \dQuote{UTF-8}, \dQuote{ISO-8859-1}, etc. if \code{html} is not ASCII.}
 
+\item{key}{A character string with the key from an Amazon user's access key who has permission to send email via Amazon SES.}
+
+\item{secret}{A character string with the secret from from an Amazon user's access key who has permission to send email via Amazon SES.}
+
+\item{region}{A character string giving the region of the user's Amazon SES service. Note that AWS SES is only available in regions us-east-1, us-west-2, or eu-west-1.}
+
+\item{force_credentials}{A logical set to \code{TRUE} or \code{FALSE}. Use \code{TRUE} only if you are providing the key, secret, and region parameters.}
+
 \item{\dots}{Additional arguments passed to \code{\link{sesPOST}}.}
 }
 \value{
@@ -61,13 +71,13 @@ verify_identity("me@example.com")
 a <- get_verification_attrs("me@example.com")
 if (a[[1]]$VerificationStatus == "Success") {
   # simple plain-text email
-  send_email("Test Email Body", subject = "Test Email", 
+  send_email("Test Email Body", subject = "Test Email",
              from = "me@example.com", to = "recipient@example.com")
 
   # html and plain text versions
-  send_email(message = "Plain text body", 
-             html = "<div><p style='font-weight=bold;'>HTML text body</p></div>", 
-             subject = "Test Email", 
+  send_email(message = "Plain text body",
+             html = "<div><p style='font-weight=bold;'>HTML text body</p></div>",
+             subject = "Test Email",
              from = "me@example.com", to = "recipient@example.com")
 }
 }
