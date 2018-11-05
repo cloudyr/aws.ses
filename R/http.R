@@ -8,6 +8,7 @@
 #' @param key A character string specifying an AWS Access Key. See \code{\link[aws.signature]{locate_credentials}}.
 #' @param secret A character string specifying an AWS Secret Key. See \code{\link[aws.signature]{locate_credentials}}.
 #' @param session_token Optionally, a character string specifying an AWS temporary Session Token to use in signing a request. See \code{\link[aws.signature]{locate_credentials}}.
+#' @param force_credentials A logical set to \code{TRUE} or \code{FALSE}. Use \code{TRUE} only if you are providing the key, secret, and region parameters.
 #' @param \dots Additional arguments passed to \code{\link[httr]{POST}}.
 #' @import httr
 #' @importFrom aws.signature signature_v4_auth
@@ -20,24 +21,33 @@ function(
   headers = list(),
   body = NULL,
   verbose = getOption("verbose", FALSE),
-  region = Sys.getenv("AWS_DEFAULT_REGION", "us-east-1"), 
-  key = NULL, 
-  secret = NULL, 
+  region = NULL,
+  key = NULL,
+  secret = NULL,
   session_token = NULL,
+  force_credentials = FALSE,
   ...
 ) {
-    # locate and validate credentials
-    credentials <- locate_credentials(key = key, secret = secret, session_token = session_token, region = region, verbose = verbose)
-    key <- credentials[["key"]]
-    secret <- credentials[["secret"]]
-    session_token <- credentials[["session_token"]]
-    region <- credentials[["region"]]
-    
+    # if necessary, locate and validate credentials
+    if(!isTRUE(force_credentials)) {
+       if(is.null(region)) {
+          region <- "us-east-1"
+          warning("AWS SES region defaulting to us-east-1. For us-west-2 or eu-west-1, set region parameter.")
+       }
+       SESregion <- region
+       region <- Sys.getenv("AWS_DEFAULT_REGION", "us-east-1")
+       credentials <- aws.signature::locate_credentials(key = key, secret = secret, session_token = session_token, region = region, verbose = verbose)
+       key <- credentials[["key"]]
+       secret <- credentials[["secret"]]
+       session_token <- credentials[["session_token"]]
+       region <- SESregion
+    }
+
     # generate request signature
     uri <- paste0("https://email.",region,".amazonaws.com")
     d_timestamp <- format(Sys.time(), "%Y%m%dT%H%M%SZ", tz = "UTC")
     body_to_sign <- if (is.null(body)) {
-        "" 
+        ""
     } else {
         paste0(names(body), "=", sapply(unname(body), utils::URLencode, reserved = TRUE), collapse = "&")
     }
@@ -51,7 +61,7 @@ function(
            canonical_headers = list(host = paste0("email.",region,".amazonaws.com"),
                                     `x-amz-date` = d_timestamp),
            request_body = body_to_sign,
-           key = key, 
+           key = key,
            secret = secret,
            session_token = session_token,
            verbose = verbose)
@@ -63,7 +73,7 @@ function(
         headers[["x-amz-security-token"]] <- session_token
     }
     H <- do.call(add_headers, headers)
-    
+
     # execute request
     if (length(query)) {
         if (!is.null(body)) {
@@ -78,7 +88,7 @@ function(
             r <- POST(uri, H, ...)
         }
     }
-    
+
     if (http_error(r)) {
         x <- try(jsonlite::fromJSON(content(r, "text", encoding = "UTF-8"))$Error, silent = TRUE)
         warn_for_status(r)
