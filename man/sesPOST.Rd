@@ -7,7 +7,8 @@
 sesPOST(query = list(), headers = list(), body = NULL,
   verbose = getOption("verbose", FALSE),
   region = Sys.getenv("AWS_DEFAULT_REGION", "us-east-1"), key = NULL,
-  secret = NULL, session_token = NULL, ...)
+  secret = NULL, session_token = NULL, force_credentials = FALSE,
+  ...)
 }
 \arguments{
 \item{query}{A list containing query string parameters}
@@ -25,6 +26,8 @@ sesPOST(query = list(), headers = list(), body = NULL,
 \item{secret}{A character string specifying an AWS Secret Key. See \code{\link[aws.signature]{locate_credentials}}.}
 
 \item{session_token}{Optionally, a character string specifying an AWS temporary Session Token to use in signing a request. See \code{\link[aws.signature]{locate_credentials}}.}
+
+\item{force_credentials}{A logical set to \code{TRUE} or \code{FALSE}. Use \code{TRUE} only if you are providing the key, secret, and region parameters.}
 
 \item{\dots}{Additional arguments passed to \code{\link[httr]{POST}}.}
 }

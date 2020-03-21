@@ -7,8 +7,8 @@
 \usage{
 get_id_notification(identity, ...)
 
-set_id_notification(identity, type = c("Bounce", "Complaint", "Delivery"),
-  topic, ...)
+set_id_notification(identity, type = c("Bounce", "Complaint",
+  "Delivery"), topic, ...)
 }
 \arguments{
 \item{identity}{An SES identity.}
